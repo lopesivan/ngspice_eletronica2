@@ -13,11 +13,11 @@ Q1  C B 0 QGEN
   let start_beta = 50
   let stop_beta  = 100
   let delta_beta = 50
-  let beta_act      = start_beta
+  let beta_value   = start_beta
 
 * loop
-while beta_act le stop_beta
-    altermod @QGEN[BF] = beta_act
+while beta_value le stop_beta
+    altermod @QGEN[BF] = beta_value
     run
     op
     let IB=@q1[ib]
@@ -31,7 +31,9 @@ while beta_act le stop_beta
     echo "IB   = ", $&IB
     echo "IC   = ", $&IC
     echo "VC   = ", $&VC
-    let beta_act = beta_act + delta_beta
+    let beta_value = beta_value + delta_beta
+
+	quit
 end
 
 .endc
