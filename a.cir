@@ -20,35 +20,53 @@ let q = 1.60*10^(-19)
 * echo $&T
 * echo $&q
 
+let start_beta = 50
+let stop_beta  = 100
+let delta_beta = 50
+let beta_value   = start_beta
+
 op
+
 let VCCx = v(1)
 let RBx = @rb[resistance]
 let RCx = @rc[resistance]
 let REx = @re[resistance]
 let VBEx = 0.7
 
+* loop
+while beta_value le stop_beta
+* code here
 
-let BETAx = 50
+    let BETAx = {beta_value}
 
-let IBx = {(VCCx-VBEx)/(RBx+(1+BETAx)*REx)}
-let ICx = {BETAx*IBx}
-let IEx = {IBx +ICx}
+    let IBx = {(VCCx-VBEx)/(RBx+(1+BETAx)*REx)}
+    let ICx = {BETAx*IBx}
+    let IEx = {IBx +ICx}
 
-echo "IB =", $&IBx
-echo "IC =", $&ICx
-echo "IE =", $&IEx
+*   echo "IB =", $&IBx
+*   echo "IC =", $&ICx
+*   echo "IE =", $&IEx
 
-let IS = {IEx*exp(-q*VBEx/(K*T))}
-echo "IS =", $&IS
-* echo $&IS
+    let IS = {IEx*exp(-q*VBEx/(K*T))}
+    echo "IS =", $&IS
+    echo $&IS
 
-altermod @QGEN[BF] = beta_value
-altermod @QGEN[IS] = {IS}
+    altermod @QGEN[BF] = {beta_value}
+    altermod @QGEN[IS] = {IS}
 
+    run
+    let IB=@q1[ib]
+    let IC=@q1[ic]
+    let IE={IB + IC}
+    let BETA={IC/IB}
+
+    echo "BETA = ", $&BETA
+    echo "IB   = ", $&IB
+    echo "IC   = ", $&IC
+* end code
+    let beta_value = beta_value + delta_beta
+end
 
 .endc
 
 .end
-
-
-
