@@ -1,0 +1,45 @@
+*
+.param TFx=1.25E-10
+.param VAFx=100
+.param ISx=20E-15
+.param CJEx=10E-12
+.param VJEx=0.7
+.param MJEx=0.5
+.MODEL BJT_TEST NPN (
++ IS = {ISx}
++ BF = 150
++ VAF = {VAFx}
++ CJE = {CJEx}
++ CJC = 10E-12
++ CJS = 0
++ VJE = {VJEx}
++ VJC = 0.7
++ VJS = .75
++ MJE = {MJEx}
++ MJC = 0.5
++ MJS = 0
++ TF = {TFx}
++ )
+.csparam TFx={TFx}
+.csparam VAFx={VAFx}
+.csparam ISx={ISx}
+.csparam CJEx={CJEx}
+.csparam VJEx={VJEx}
+.csparam MJEx={MJEx}
+
+Q1 1 4 0 BJT_TEST
+IIN 0 4 dc 0.0004 ac 1 sin(0.012 0.001 144e6)
+L5 1 21 1e-6
+VDD 21 0 dc 28
+
+.options TEMP=25
+.control
+op
+print all
+ac lin 10000 100e6 200e6
+let cb=@q1[gm]*TFx
+let cje=CJEx/(1 + @q1[vbe]/VJEx)^MJEx
+print cb+cje
+print @q1[cpi]
+.endc
+.end

@@ -1,0 +1,39 @@
+* Exemplo 4.1 Boylestade 8º edição
+
+VCC 1 0 DC=12
+RC  1 C 2.2k
+RB  1 B 240k
+Q1  C B 0 QGEN
+
+.model QGEN npn(BF=50 IS=2.23851E-15)
+
+.options savecurrents TEMP=20
+.control
+
+  let start_beta = 50
+  let stop_beta  = 100
+  let delta_beta = 50
+  let beta_act      = start_beta
+
+* loop
+while beta_act le stop_beta
+    altermod @QGEN[BF] = beta_act
+    run
+    op
+    let IB=@q1[ib]
+    let IC=@q1[ic]
+    let IE={IB + IC}
+    let BETA={IC/IB}
+    let VB=b
+    let VC=c
+    let VCE={VC-VB}
+    echo "BETA = ", $&BETA
+    echo "IB   = ", $&IB
+    echo "IC   = ", $&IC
+    echo "VC   = ", $&VC
+    let beta_act = beta_act + delta_beta
+end
+
+.endc
+
+.end
