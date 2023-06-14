@@ -1,26 +1,38 @@
 * exemplo
 
+VCC 1 0 DC=20
+RC  1 C 2k
+RB  1 B 430k
+RE  E 0 1k
+Q1  C B E QGEN
+
+.model QGEN npn(BF=50 IS=2.23851E-15)
+
+.options savecurrents TEMP=20
 
 
 .control
-let VCCx = 20
-let RBx = 430*1000
-let RCx = 2*1000
-let REx = 1*1000
-let VBEx = 0.7
-
 * constantes
 let K = 1.38*10^(-23)
 let T = 20 + 273
 let q = 1.60*10^(-19)
+* echo $&K
+* echo $&T
+* echo $&q
+
+op
+let VCCx = v(1)
+let RBx = @rb[resistance]
+let RCx = @rc[resistance]
+let REx = @re[resistance]
+let VBEx = 0.7
+
 
 let BETAx = 50
 
 let IBx = {(VCCx-VBEx)/(RBx+(1+BETAx)*REx)}
 let ICx = {BETAx*IBx}
-
 let IEx = {IBx +ICx}
-
 
 echo "IB =", $&IBx
 echo "IC =", $&ICx
@@ -28,11 +40,11 @@ echo "IE =", $&IEx
 
 let IS = {IEx*exp(-q*VBEx/(K*T))}
 echo "IS =", $&IS
+* echo $&IS
 
-echo $&K
-echo $&T
-echo $&q
-echo $&IS
+altermod @QGEN[BF] = beta_value
+altermod @QGEN[IS] = {IS}
+
 
 .endc
 
