@@ -1,0 +1,42 @@
+* exemplo
+
+
+
+.control
+let VCCx = 20
+let RBx = 430*1000
+let RCx = 2*1000
+let REx = 1*1000
+let VBEx = 0.7
+
+* constantes
+let K = 1.38*10^(-23)
+let T = 20 + 273
+let q = 1.60*10^(-19)
+
+let BETAx = 50
+
+let IBx = {(VCCx-VBEx)/(RBx+(1+BETAx)*REx)}
+let ICx = {BETAx*IBx}
+
+let IEx = {IBx +ICx}
+
+
+echo "IB =", $&IBx
+echo "IC =", $&ICx
+echo "IE =", $&IEx
+
+let IS = {IEx*exp(-q*VBEx/(K*T))}
+echo "IS =", $&IS
+
+echo $&K
+echo $&T
+echo $&q
+echo $&IS
+
+.endc
+
+.end
+
+
+
