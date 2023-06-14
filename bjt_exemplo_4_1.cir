@@ -1,0 +1,41 @@
+* Exemplo 4.1 Boylestade 8º edição
+
+VCC 1 0 DC=12
+RC  1 C 2.2k
+RB  1 B 240k
+Q1  C B 0 QGEN
+
+.model QGEN npn(BF=50 IS=2.23851E-15)
+
+.options savecurrents TEMP=20
+.control
+run
+op
+let IB=@q1[ib]
+let IC=@q1[ic]
+let IE={IB + IC}
+let BETA={IC/IB}
+let VB=b
+let VC=c
+let VCE={VC-VB}
+echo "IB   = ", $&IB
+echo "IC   = ", $&IC
+echo "IE   = ", $&IE
+echo "BETA = ", $&BETA
+echo "VB   = ", $&VB
+echo "VC   = ", $&VC
+echo "VCE  = ", $&VCE
+
+.endc
+
+.end
+
+* @q1[ib] = 4.697174e-05
+* @q1[ic] = 2.348587e-03
+* @q1[ie] = -2.39556e-03
+* @q1[is] = 6.833159e-12
+* @rb[i] = 4.697127e-05
+* @rc[i] = 2.348564e-03
+* v(1) = 1.200000e+01
+* b = 7.268948e-01
+* c = 6.833159e+00
