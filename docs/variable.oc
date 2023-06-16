@@ -1,0 +1,19 @@
+
+function res = ddp(x, req, V)
+res = (x/req)*V;
+endfunction
+
+
+R1 = 100;
+R2 = 200;
+R3 = 300;
+V  = 5;
+
+v1 = ddp(R1, sum([R1, R2, R3]), V)
+v2 = ddp(R2, sum([R1, R2, R3]), V)
+v3 = ddp(R3, sum([R1, R2, R3]), V)
+
+disp(v1);
+disp(v2);
+disp(v3);
+

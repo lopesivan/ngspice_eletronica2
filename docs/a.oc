@@ -1,0 +1,12 @@
+function res = quadrado(x, req, V)
+res = (x/req)*V;
+endfunction
+
+
+v = quadrado(3,sum([3,4,5]),8)
+
+disp(v)
+disp(v)
+disp(v)
+disp(v)
+disp(v)
