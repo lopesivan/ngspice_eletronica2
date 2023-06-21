@@ -2,11 +2,33 @@ function res = quadrado(x, req, V)
 res = (x/req)*V;
 endfunction
 
+R1 = 3e3
+R2 = 2e3
+R3 = 2.1e3
+V  = 10
 
-v = quadrado(3,sum([3,4,5]),8)
+v1 = quadrado(R1,sum([R1,R2,R3]),V)
+v2 = quadrado(R2,sum([R1,R2,R3]),V)
+v3 = quadrado(R3,sum([R1,R2,R3]),V)
+v1+v2+v3
 
-disp(v)
-disp(v)
-disp(v)
-disp(v)
-disp(v)
+R1 = 1e3
+R2 = 1e3
+R3 = 1e3
+V  = 50
+
+v1 = quadrado(R1,sum([R1,R2,R3]),V)
+v2 = quadrado(R2,sum([R1,R2,R3]),V)
+v3 = quadrado(R3,sum([R1,R2,R3]),V)
+v1+v2+v3
+
+R1 = 600
+R2 = 3e3
+R3 = 2.1e3
+V  = 10
+
+v1 = quadrado(R1,sum([R1,R2,R3]),V)
+v2 = quadrado(R2,sum([R1,R2,R3]),V)
+v3 = quadrado(R3,sum([R1,R2,R3]),V)
+v1+v2+v3
+
